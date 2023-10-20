@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Payroll.Data;
 
@@ -11,9 +12,11 @@ using Payroll.Data;
 namespace Payroll.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231019083507_Employees")]
+    partial class Employees
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,33 +261,6 @@ namespace Payroll.Data.Migrations
                     b.ToTable("CompanyDepartment");
                 });
 
-            modelBuilder.Entity("Payroll.Models.Deduction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Deduction");
-                });
-
             modelBuilder.Entity("Payroll.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -340,33 +316,6 @@ namespace Payroll.Data.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("Payroll.Models.Income", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Income");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -418,17 +367,6 @@ namespace Payroll.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Payroll.Models.Deduction", b =>
-                {
-                    b.HasOne("Payroll.Models.Employee", "Employee")
-                        .WithMany("Deductions")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("Payroll.Models.Employee", b =>
                 {
                     b.HasOne("Payroll.Models.CompanyBranch", "CompanyBranch")
@@ -448,17 +386,6 @@ namespace Payroll.Data.Migrations
                     b.Navigation("CompanyDepartment");
                 });
 
-            modelBuilder.Entity("Payroll.Models.Income", b =>
-                {
-                    b.HasOne("Payroll.Models.Employee", "Employee")
-                        .WithMany("Incomes")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("Payroll.Models.CompanyBranch", b =>
                 {
                     b.Navigation("Employees");
@@ -467,13 +394,6 @@ namespace Payroll.Data.Migrations
             modelBuilder.Entity("Payroll.Models.CompanyDepartment", b =>
                 {
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("Payroll.Models.Employee", b =>
-                {
-                    b.Navigation("Deductions");
-
-                    b.Navigation("Incomes");
                 });
 #pragma warning restore 612, 618
         }
