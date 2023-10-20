@@ -15,5 +15,7 @@ namespace Payroll.Data
         public DbSet<Payroll.Models.CompanyDepartment> CompanyDepartment { get; set; } = default!;
         public DbSet<Payroll.Models.Income> Income { get; set; } = default!;
         public DbSet<Payroll.Models.Deduction> Deduction { get; set; } = default!;
+        public DbSet<Payroll.Models.IncomeType> IncomeType { get; set; } = default!;
+        public DbSet<Payroll.Models.DeductionType> DeductionType { get; set; } = default!;
     }
 }
